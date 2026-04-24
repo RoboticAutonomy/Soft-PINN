@@ -8,6 +8,13 @@ This framework presents a new physics-informed neural network (PINN) for soft co
 
 
 # The Soft-PINN framework for soft continuum robots
+The proposed
+architecture as shown in Figure 3 combines an MLP as an FNN with embedded physics constraints to construct physically consistent predictions of soft robot deformation and behavior. While the MLP backbone approximates the mapping from spatial coordinates (x, y and z) and actuation pressure (p) to the displacement components (u_x, u_y and u_z), physical consistency is enforced through TensorFlow’s automatic differentiation of the network outputs. The
+spatial derivatives are used to construct the deformation gradient and subsequently the isochoric left Cauchy-Green deformation tensor ¯B. Then, the strain energy function W is defined for both Mooney–Rivlin and Yeoh hyperelastic models, and the stress tensor, σ, is computed analytically by differentiating W regarding the first and second invariants (I_1 and I_2). The resultant stress tensor is then substituted into the Cauchy momentum equations, forming the core of the physics-informed constraints.
+The complete physics model comprises three key components: (1) the equilibrium equations derived from the Cauchy momentum equation in equilibrium for soft
+continuum materials, (2) ICs that define the undeformed configuration u = u0, and (3) BCs including both Dirichlet (fixed displacements) and Neumann (applied tractions on the inner and outer surfaces). The selection of BCs is robotspecific conditions, and for the systems in this study, inner and outer surface traction conditions are excluded as we are using the face mesh, where the unit normal n is in the zdirection and we are solving the deformation in xy-plane.
+
+
 <img width="1598" height="778" alt="image" src="https://github.com/user-attachments/assets/f45370c1-9192-411b-87a3-b822e2965b02" />
 
 # The design of the four pneumatic soft continuum robot testbeds
